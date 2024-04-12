@@ -1,10 +1,35 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import '../components/BottomNavBar.dart';
+import 'HomeScreen.dart';
 
-class MainScreen extends StatelessWidget {
-  const MainScreen({super.key});
+class MainScreen extends StatefulWidget {
+  const MainScreen({Key? key}) : super(key: key);
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  int _currentIndex = 0;
+  final List<Widget> _children = [
+    const HomeScreen(),
+    const HomeScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: _children[_currentIndex],
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: _currentIndex,
+        onTap: (int index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+      ),
+    );
   }
 }
+
+
