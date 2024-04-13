@@ -29,7 +29,7 @@ class BottomNavBar extends StatelessWidget {
         BottomNavigationBarItem(
           icon: Icon(Icons.book_outlined),
           activeIcon: Icon(Icons.book),
-          label: 'Location',
+          label: 'Courses',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.settings_outlined),
