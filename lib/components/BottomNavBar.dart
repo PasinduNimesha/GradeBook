@@ -27,8 +27,8 @@ class BottomNavBar extends StatelessWidget {
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.location_on_outlined),
-          activeIcon: Icon(Icons.location_on),
+          icon: Icon(Icons.book_outlined),
+          activeIcon: Icon(Icons.book),
           label: 'Location',
         ),
         BottomNavigationBarItem(

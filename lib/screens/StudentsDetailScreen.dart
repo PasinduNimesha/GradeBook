@@ -12,27 +12,39 @@ class StudentsDetailScreen extends StatelessWidget {
       ),
       body: Center(
         child: DataTable(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black),
+            borderRadius: BorderRadius.circular(10),
+          ),
           columns: const [
+            DataColumn(label: Text('Index')),
             DataColumn(label: Text('Name')),
             DataColumn(label: Text('Age')),
-            DataColumn(label: Text('Grade')),
           ],
           rows: [
             DataRow(cells: [
-              DataCell(Text('John')),
-              DataCell(Text('25')),
-              DataCell(Text('A')),
+              DataCell(Text('1')),
+              DataCell(Text('John Doe')),
+              DataCell(Text('20')),
             ]),
             DataRow(cells: [
-              DataCell(Text('Alice')),
-              DataCell(Text('30')),
-              DataCell(Text('B')),
+              DataCell(Text('2')),
+              DataCell(Text('Jane Doe')),
+              DataCell(Text('22')),
             ]),
-            // Add more rows as needed
+            DataRow(cells: [
+              DataCell(Text('3')),
+              DataCell(Text('John Smith')),
+              DataCell(Text('25')),
+            ]),
           ],
         ),
-      )
-      ,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
