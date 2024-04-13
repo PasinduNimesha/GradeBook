@@ -32,8 +32,8 @@ class BottomNavBar extends StatelessWidget {
           label: 'Location',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.person_outline),
-          activeIcon: Icon(Icons.person),
+          icon: Icon(Icons.settings_outlined),
+          activeIcon: Icon(Icons.settings),
           label: 'Profile',
         ),
       ],
