@@ -10,9 +10,27 @@ class StudentsDetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Students Detail Screen'),
       ),
-      body: const Center(
-        child: Text('Students Detail Screen'),
-      ),
+      body: DataTable(
+        columns: const [
+          DataColumn(label: Text('Name')),
+          DataColumn(label: Text('Age')),
+          DataColumn(label: Text('Grade')),
+        ],
+        rows: [
+          DataRow(cells: [
+            DataCell(Text('John')),
+            DataCell(Text('25')),
+            DataCell(Text('A')),
+          ]),
+          DataRow(cells: [
+            DataCell(Text('Alice')),
+            DataCell(Text('30')),
+            DataCell(Text('B')),
+          ]),
+          // Add more rows as needed
+        ],
+      )
+      ,
     );
   }
 }

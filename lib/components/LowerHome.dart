@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grade_book/screens/StudentsDetailScreen.dart';
 
 import 'NavCard.dart';
 
@@ -25,9 +26,11 @@ class LowerHome extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            NavCard(),
+            NavCard(onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const StudentsDetailScreen()));
+            }),
             SizedBox(height: 10),
-            NavCard(),
+            NavCard(onPressed: () {},),
           ],
         ),
       ),
