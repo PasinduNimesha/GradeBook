@@ -26,11 +26,16 @@ class LowerHome extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            NavCard(onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const StudentsDetailScreen()));
-            }),
+            NavCard(
+                text: 'Students',
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const StudentsDetailScreen()));
+                }),
             SizedBox(height: 10),
-            NavCard(onPressed: () {},),
+            NavCard(
+              text: 'Teachers',
+              onPressed: () {},
+            ),
           ],
         ),
       ),

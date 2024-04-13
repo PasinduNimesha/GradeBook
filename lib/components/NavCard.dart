@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class NavCard extends StatelessWidget {
+  final String text;
   final VoidCallback onPressed;
-  const NavCard({super.key, required this.onPressed});
+  const NavCard({super.key, required this.onPressed, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +13,15 @@ class NavCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.grey,
           borderRadius: BorderRadius.circular(10),
+        ),
+        child: Center(
+          child: Text(
+            text,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+            ),
+          ),
         ),
       ),
       onTap: onPressed,
