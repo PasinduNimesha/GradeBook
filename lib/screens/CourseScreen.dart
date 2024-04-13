@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grade_book/components/LargeButton.dart';
 
 class CourseScreen extends StatelessWidget {
   const CourseScreen({super.key});
@@ -9,8 +10,12 @@ class CourseScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Course Screen'),
       ),
-      body: const Center(
-        child: Text('Course Screen'),
+      body: Center(
+        child: Column(
+          children: [
+            LargeButton(),
+          ],
+        ),
       ),
     );
   }

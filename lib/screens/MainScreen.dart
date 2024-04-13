@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grade_book/screens/CourseScreen.dart';
 import 'package:grade_book/screens/SettingsScreen.dart';
 import '../components/BottomNavBar.dart';
 import 'HomeScreen.dart';
@@ -14,7 +15,7 @@ class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     const HomeScreen(),
-    const HomeScreen(),
+    const CourseScreen(),
     const SettingsScreen(),
   ];
 
