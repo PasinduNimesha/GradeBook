@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'NavCard.dart';
+
 class LowerHome extends StatelessWidget {
   const LowerHome({super.key});
 
@@ -18,6 +20,16 @@ class LowerHome extends StatelessWidget {
             offset: Offset(0, 2),
           ),
         ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            NavCard(),
+            SizedBox(height: 10),
+            NavCard(),
+          ],
+        ),
       ),
     );
   }
