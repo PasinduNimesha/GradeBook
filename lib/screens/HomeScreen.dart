@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:grade_book/components/LowerHome.dart';
+import 'package:grade_book/components/UpperHome.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -10,41 +12,13 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Home Screen'),
       ),
-      body: Center(
+      body: const Center(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.3,
-                width: MediaQuery.of(context).size.width * 0.9,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.grey,
-                      blurRadius: 5,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                ),
-              ),
+              UpperHome(),
               SizedBox(height: 20,),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.5,
-                width: MediaQuery.of(context).size.width * 0.9,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.grey,
-                      blurRadius: 5,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                ),
-              ),
+              LowerHome(),
               SizedBox(height: 20,),
             ],
           ),

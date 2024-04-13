@@ -1,13 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class UpperHome extends StatelessWidget {
-  const UpperHome({super.key});
+class LowerHome extends StatelessWidget {
+  const LowerHome({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.3,
+      height: MediaQuery.of(context).size.height * 0.5,
       width: MediaQuery.of(context).size.width * 0.9,
       decoration: BoxDecoration(
         color: Colors.white,
