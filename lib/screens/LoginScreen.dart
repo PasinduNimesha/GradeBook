@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 20,),
             MediumButton(
                 text: "Sign In",
-                onPressed: () {
+                onPressed: () async {
                   setState(() {
                     isLoading = true;
                   });
@@ -63,17 +63,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           context,
                           MaterialPageRoute(builder: (context) => const HomeScreen())
                       );
-                      setState(() {
-                        isLoading = false;
-                        txt_password = "";
-                        txt_username = "";
-                      });
+
                     }).catchError((onError) {
                       Get.snackbar('Error', onError.toString());
                     });
                   } else {
                     Get.snackbar('Error', 'Please fill all fields');
                   }
+                  setState(() {
+                    isLoading = false;
+                  });
                 }),
           ],
         ),
