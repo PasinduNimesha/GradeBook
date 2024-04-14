@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../components/InputField.dart';
 import '../components/MediumButton.dart';
@@ -13,6 +16,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  String txt_username = "";
+  String txt_password = "";
+  bool isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -22,21 +28,58 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
+        child: isLoading ?
+        const CircularProgressIndicator() :
+        Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const InputField(label: 'Username'),
-            const InputField(label: 'Password'),
+            InputField(
+                label: 'Username',
+                onPressed: (value) {
+                  txt_username = value;
+                }),
+            const SizedBox(height: 20,),
+            InputField(
+              label: 'Password',
+              onPressed: (value) {
+                txt_password = value;
+              },
+              obscureText: true,
+            ),
+            const SizedBox(height: 20,),
             MediumButton(
                 text: "Sign In",
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const MainScreen())
-                  );
+                  setState(() {
+                    isLoading = true;
+                  });
+                  if(txt_username.isNotEmpty && txt_password.isNotEmpty){
+                    var auth = FirebaseAuth.instance;
+                    auth
+                        .signInWithEmailAndPassword(
+                        email: txt_username, password: txt_password)
+                        .then((value) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const HomeScreen())
+                      );
+                      setState(() {
+                        isLoading = false;
+                        txt_password = "";
+                        txt_username = "";
+                      });
+                    }).catchError((onError) {
+                      Get.snackbar('Error', onError.toString());
+                    });
+                  } else {
+                    Get.snackbar('Error', 'Please fill all fields');
+                  }
                 }),
           ],
         ),
+
+
+
       ),
     );
   }
