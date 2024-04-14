@@ -59,20 +59,24 @@ class _LoginScreenState extends State<LoginScreen> {
                         .signInWithEmailAndPassword(
                         email: txt_username, password: txt_password)
                         .then((value) {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(builder: (context) => const HomeScreen())
                       );
 
                     }).catchError((onError) {
-                      Get.snackbar('Error', onError.toString());
+                      Get.snackbar("Username or Password is incorrect", "Please try again");
+                      setState(() {
+                        isLoading = false;
+                      });
                     });
                   } else {
                     Get.snackbar('Error', 'Please fill all fields');
+                    setState(() {
+                      isLoading = false;
+                    });
                   }
-                  setState(() {
-                    isLoading = false;
-                  });
+
                 }),
           ],
         ),
