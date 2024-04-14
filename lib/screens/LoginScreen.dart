@@ -63,6 +63,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           context,
                           MaterialPageRoute(builder: (context) => const HomeScreen())
                       );
+                      setState(() {
+                        isLoading = false;
+                      });
 
                     }).catchError((onError) {
                       Get.snackbar("Username or Password is incorrect", "Please try again");
