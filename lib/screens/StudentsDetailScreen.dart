@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:grade_book/screens/AddStudentScreen.dart';
 
 class StudentsDetailScreen extends StatelessWidget {
   const StudentsDetailScreen({super.key});
@@ -42,6 +43,7 @@ class StudentsDetailScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const AddStudentScreen()));
         },
         child: const Icon(Icons.add),
       ),
