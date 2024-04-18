@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:grade_book/components/InputField.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class AddStudentScreen extends StatefulWidget {
   const AddStudentScreen({super.key});
@@ -56,12 +60,60 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
                   _age = int.parse(value);
                 });
               },),
-              ElevatedButton(onPressed: () {}, child: const Text('Add Student')),
-
+              ElevatedButton(onPressed: () {
+                handleAddStudent();
+              }, child: const Text('Add Student')),
             ],
           ),
         ),
       ),
     );
+  }
+  void handleAddStudent() async {
+    FirebaseFirestore.instance.collection('students').add({
+      'first_name': _firstName,
+      'last_name': _lastName,
+      'email': _email,
+      'phone': _phone,
+      'address': _address,
+      'age': _age,
+    }).then((value) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Success'),
+              content: const Text('Student added successfully!'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          }
+      );
+    }).catchError((error) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Error'),
+              content: Text('An error occurred: $error'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          }
+      );
+    });
   }
 }
