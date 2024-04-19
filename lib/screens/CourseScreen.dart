@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:grade_book/components/LargeButton.dart';
 
+import 'CourseDetailsScreen.dart';
+
 class CourseScreen extends StatelessWidget {
   const CourseScreen({super.key});
 
@@ -36,7 +38,9 @@ class CourseScreen extends StatelessWidget {
                     name: name,
                     code: code,
                     onTap: () {
-                      // Handle button tap, e.g., navigate to course details screen
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return CourseDetailsscreen();
+                      }));
                     },
                   ),
                 );
