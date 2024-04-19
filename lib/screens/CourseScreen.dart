@@ -13,7 +13,7 @@ class CourseScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            LargeButton(),
+            LargeButton(name: 'Mathematics', code: 'MATH101',),
           ],
         ),
       ),
