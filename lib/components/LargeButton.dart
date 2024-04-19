@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LargeButton extends StatelessWidget {
-  const LargeButton({super.key});
+  final String name;
+  final String code;
+  const LargeButton({super.key, required this.name, required this.code});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,11 @@ class LargeButton extends StatelessWidget {
             offset: Offset(0, 2),
           ),
         ],
+      ),
+      child: ListTile(
+        title: Text(name),
+        subtitle: Text(code),
+        trailing: const Icon(Icons.arrow_forward_ios),
       ),
     );
   }
