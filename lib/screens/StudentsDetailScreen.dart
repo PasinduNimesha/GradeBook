@@ -11,6 +11,14 @@ class StudentsDetailScreen extends StatefulWidget {
 }
 
 class _StudentsDetailScreenState extends State<StudentsDetailScreen> {
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    initialize();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,6 +85,13 @@ class _StudentsDetailScreenState extends State<StudentsDetailScreen> {
         ],
       );
     }).toList();
+  }
+
+  void initialize() async{
+    Future.delayed(const Duration(seconds: 3));
+    setState(() {
+      isLoading = false;
+    });
   }
 
 
