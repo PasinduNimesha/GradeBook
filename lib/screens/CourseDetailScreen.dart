@@ -14,6 +14,7 @@ class CourseDetailScreen extends StatefulWidget {
 class _CourseDetailScreenState extends State<CourseDetailScreen> {
   int totalStudents = 0;
   double averageMarks = 0.0;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -22,6 +23,9 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
   }
 
   Future<void> _calculateCourseDetails() async {
+    setState(() {
+      isLoading = true;
+    });
     try {
       final marksSnapshot = await FirebaseFirestore
           .instance
@@ -45,7 +49,9 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
         'average_marks': averageMarks,
       });
 
-      setState(() {}); // Update UI with new values
+      setState(() {
+        isLoading = false;
+      }); // Update UI with new values
     } catch (error) {
       print('Error calculating course details: $error');
     }
@@ -57,20 +63,18 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
       appBar: AppBar(
         title: const Text('Course Details Screen'),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Total Students: $totalStudents'),
-            ),
-            Container(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Average Marks: ${averageMarks.toStringAsFixed(2)}'),
-            ),
-          ],
-        ),
-      ),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Center(
+            child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  Text('Total Students: $totalStudents'),
+                  const SizedBox(height: 20),
+                  Text('Average Marks: $averageMarks'),
+                ],
+              ),
+          ),
     );
   }
 }
