@@ -40,6 +40,8 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
         final marks = data['marks'] as int;
         totalMarks += marks;
         final studentID = data['studentID'].toString().split('/').last.split(')')[0];
+        final studentRef = data['studentID'] as DocumentReference<Map<String, dynamic>>;
+        print(studentRef);
         await FirebaseFirestore.instance.collection('students').doc(studentID).get().then((value) {
           tableData[value['Username']] = marks;
         });
