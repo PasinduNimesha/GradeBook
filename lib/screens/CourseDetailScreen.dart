@@ -15,6 +15,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
   int totalStudents = 0;
   double averageMarks = 0.0;
   bool isLoading = false;
+  Map<String, dynamic> tableData = {};
 
   @override
   void initState() {
@@ -39,7 +40,12 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
         final data = doc.data();
         final marks = data['marks'] as int;
         totalMarks += marks;
+        final studentID = data['studentID'].toString().split('/').last.split(')')[0];
+        await FirebaseFirestore.instance.collection('students').doc(studentID).get().then((value) {
+          tableData[value['Username']] = marks;
+        });
       }
+      print(tableData);
 
       averageMarks = totalMarks / totalStudents;
 
@@ -66,15 +72,42 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : Center(
-            child: Column(
-                children: [
-                  const SizedBox(height: 20),
-                  Text('Total Students: $totalStudents'),
-                  const SizedBox(height: 20),
-                  Text('Average Marks: $averageMarks'),
-                ],
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+            Text('Total Students: $totalStudents'),
+            const SizedBox(height: 20),
+            Text('Average Marks: $averageMarks'),
+            const SizedBox(height: 20),
+            Expanded(
+              child: SingleChildScrollView(
+                child: DataTable(
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      top: BorderSide(width: 1),
+                      bottom: BorderSide(width: 1),
+                    ),
+                  ),
+                  columnSpacing: 150,
+                  border: TableBorder.all(),
+                  columns: const [
+                    DataColumn(label: Text('Username')),
+                    DataColumn(label: Text('Marks')),
+                  ],
+                  rows: tableData.entries.map((entry) {
+                    final name = entry.key;
+                    final marks = entry.value;
+                    return DataRow(cells: [
+                      DataCell(Text(name)),
+                      DataCell(Text(marks.toString())),
+                    ]);
+                  }).toList(),
+                ),
               ),
-          ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
