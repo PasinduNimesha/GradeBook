@@ -98,7 +98,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                     final marks = entry.value;
                     return DataRow(cells: [
                       DataCell(Text(name)),
-                      DataCell(Text(marks.toString())),
+                      DataCell(Text(marks.toString()), showEditIcon: false),
                     ]);
                   }).toList(),
                 ),
