@@ -87,7 +87,7 @@ class _StudentsDetailScreenState extends State<StudentsDetailScreen> {
               ),
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return ViewProfileScreen();
+                return ViewProfileScreen(documentID: doc.id,);
               }));
             },
           ),
