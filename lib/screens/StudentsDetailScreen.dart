@@ -12,6 +12,7 @@ class StudentsDetailScreen extends StatefulWidget {
 
 class _StudentsDetailScreenState extends State<StudentsDetailScreen> {
   bool isLoading = false;
+  Map<String, dynamic> userData = {};
 
   @override
   void initState() {
@@ -66,7 +67,7 @@ class _StudentsDetailScreenState extends State<StudentsDetailScreen> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const AddStudentScreen()),
+            MaterialPageRoute(builder: (context) => const AddStudentScreen(toUpdate: false, studentData: {},)),
           );
         },
         child: const Icon(Icons.add),
@@ -96,8 +97,12 @@ class _StudentsDetailScreenState extends State<StudentsDetailScreen> {
             children: [
               IconButton(
                 icon: const Icon(Icons.edit),
-                onPressed: () {
-                  // Edit student
+                onPressed: () async {
+                  fetchStudentDetails(doc.id);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AddStudentScreen(toUpdate: true, documentID: doc.id, studentData: userData,),),
+                  );
                 },
               ),
               IconButton(
@@ -140,6 +145,20 @@ class _StudentsDetailScreenState extends State<StudentsDetailScreen> {
       isLoading = false;
     });
   }
+  Future<void> fetchStudentDetails(String documentID) async {
+    FirebaseFirestore.instance.collection('students').doc(documentID).get().then((value) {
+      final data = value.data();
+      Future.delayed(const Duration(seconds: 3));
+      setState(() {
+        userData = data!;
+      });
+    });
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+
 
 
 }
