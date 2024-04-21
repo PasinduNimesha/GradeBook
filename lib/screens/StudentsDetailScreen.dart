@@ -103,11 +103,32 @@ class _StudentsDetailScreenState extends State<StudentsDetailScreen> {
               IconButton(
                 icon: const Icon(Icons.delete),
                 onPressed: () {
-                  // Delete student
+                  showDialog(context: context, builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Delete Student'),
+                      content: const Text('Are you sure you want to delete this student?'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('Cancel'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            FirebaseFirestore.instance.collection('students').doc(doc.id).delete();
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('Delete'),
+                        ),
+                      ],
+                    );
+                  });
                 },
               ),
             ],
-          )),
+          )
+          ),
         ],
       );
     }).toList();
