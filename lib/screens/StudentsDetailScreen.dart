@@ -92,7 +92,22 @@ class _StudentsDetailScreenState extends State<StudentsDetailScreen> {
           DataCell(Text(student['first_name'] ?? '')),
           DataCell(Text(student['last_name'] ?? '')),
           DataCell(Text(student['age']?.toString() ?? '')),
-          DataCell(Icon(Icons.edit)),
+          DataCell(Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.edit),
+                onPressed: () {
+                  // Edit student
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.delete),
+                onPressed: () {
+                  // Delete student
+                },
+              ),
+            ],
+          )),
         ],
       );
     }).toList();
