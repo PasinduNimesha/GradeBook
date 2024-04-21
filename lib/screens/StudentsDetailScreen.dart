@@ -13,7 +13,7 @@ class StudentsDetailScreen extends StatefulWidget {
 }
 
 class _StudentsDetailScreenState extends State<StudentsDetailScreen> {
-  bool isLoading = false;
+  bool _isLoading = true;
   Map<String, dynamic> userData = {};
 
   @override
@@ -100,7 +100,7 @@ class _StudentsDetailScreenState extends State<StudentsDetailScreen> {
                 icon: const Icon(Icons.edit),
                 onPressed: () async {
                   await fetchStudentDetails(doc.id);
-                  Get.to(() => AddStudentScreen(toUpdate: true, documentID: doc.id, studentData: userData));
+                  Get.to(() => AddStudentScreen(toUpdate: true, documentID: doc.id));
                 },
               ),
               IconButton(
@@ -145,11 +145,7 @@ class _StudentsDetailScreenState extends State<StudentsDetailScreen> {
       });
     });
     setState(() {
-      isLoading = false;
+      _isLoading = false;
     });
   }
-
-
-
-
 }
