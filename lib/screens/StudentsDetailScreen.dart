@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:grade_book/screens/AddStudentScreen.dart';
 import 'package:grade_book/screens/ViewProfileScreen.dart';
 
@@ -16,7 +18,6 @@ class _StudentsDetailScreenState extends State<StudentsDetailScreen> {
 
   @override
   void initState() {
-    initialize();
     super.initState();
   }
 
@@ -67,7 +68,7 @@ class _StudentsDetailScreenState extends State<StudentsDetailScreen> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const AddStudentScreen(toUpdate: false, studentData: {},)),
+            MaterialPageRoute(builder: (context) => const AddStudentScreen(toUpdate: false,)),
           );
         },
         child: const Icon(Icons.add),
@@ -98,11 +99,8 @@ class _StudentsDetailScreenState extends State<StudentsDetailScreen> {
               IconButton(
                 icon: const Icon(Icons.edit),
                 onPressed: () async {
-                  fetchStudentDetails(doc.id);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AddStudentScreen(toUpdate: true, documentID: doc.id, studentData: userData,),),
-                  );
+                  await fetchStudentDetails(doc.id);
+                  Get.to(() => AddStudentScreen(toUpdate: true, documentID: doc.id, studentData: userData));
                 },
               ),
               IconButton(
@@ -139,16 +137,9 @@ class _StudentsDetailScreenState extends State<StudentsDetailScreen> {
     }).toList();
   }
 
-  void initialize() async{
-    Future.delayed(const Duration(seconds: 3));
-    setState(() {
-      isLoading = false;
-    });
-  }
   Future<void> fetchStudentDetails(String documentID) async {
-    FirebaseFirestore.instance.collection('students').doc(documentID).get().then((value) {
+    await FirebaseFirestore.instance.collection('students').doc(documentID).get().then((value) {
       final data = value.data();
-      Future.delayed(const Duration(seconds: 3));
       setState(() {
         userData = data!;
       });
