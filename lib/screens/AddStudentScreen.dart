@@ -9,8 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class AddStudentScreen extends StatefulWidget {
   final bool toUpdate;
   final String documentID;
-  final Map<String, dynamic> studentData;
-  const AddStudentScreen({super.key, required this.toUpdate, this.documentID = '', this.studentData = const {}});
+  const AddStudentScreen({super.key, required this.toUpdate, this.documentID = ''});
 
 
   @override
@@ -24,14 +23,16 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
   String _phone = '';
   String _address = '';
   int _age = 0;
-  bool _isLoading = false;
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    if(widget.toUpdate){
+    if(widget.toUpdate) {
       fetchStudentDetails();
-    }
+    };
+    initialize();
+
   }
 
   @override
@@ -50,42 +51,42 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
                   _firstName = value;
                 });
               },
-                defaultValue: widget.toUpdate? widget.studentData['first_name']: '',
+                defaultValue: _firstName,
               ),
               InputField(label: "Last Name", onPressed: (String value) {
                 setState(() {
                   _lastName = value;
                 });
               },
-                defaultValue: widget.toUpdate? widget.studentData['last_name']: '',
+                defaultValue: _lastName,
               ),
               InputField(label: "Email", onPressed: (String value) {
                 setState(() {
                   _email = value;
                 });
               },
-                defaultValue: widget.toUpdate? widget.studentData['email']: '',
+                defaultValue: _email,
               ),
               InputField(label: "Phone", onPressed: (String value) {
                 setState(() {
                   _phone = value;
                 });
               },
-                defaultValue: widget.toUpdate? widget.studentData['phone']: '',
+                defaultValue: _phone,
               ),
               InputField(label: "Address", onPressed: (String value) {
                 setState(() {
                   _address = value;
                 });
               },
-                defaultValue: widget.toUpdate? widget.studentData['address']: '',
+                defaultValue: _address,
               ),
               InputField(label: "Age", onPressed: (String value) {
                 setState(() {
                   _age = int.parse(value);
                 });
               },
-                defaultValue: widget.toUpdate? widget.studentData['age'].toString(): '',
+                defaultValue: widget.toUpdate? _age.toString() : '',
               ),
               ElevatedButton(onPressed: () {
                 if(!widget.toUpdate){
@@ -105,7 +106,7 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
     );
   }
   void handleAddStudent() async {
-    FirebaseFirestore.instance.collection('students').add({
+    await FirebaseFirestore.instance.collection('students').add({
       'first_name': _firstName,
       'last_name': _lastName,
       'email': _email,
@@ -153,9 +154,9 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
   }
 
   void fetchStudentDetails() async {
-    FirebaseFirestore.instance.collection('students').doc(widget.documentID).get().then((value) {
+
+    await FirebaseFirestore.instance.collection('students').doc(widget.documentID).get().then((value) {
       final data = value.data();
-      Future.delayed(const Duration(seconds: 3));
       setState(() {
         _firstName = data?['first_name'] ?? "";
         _lastName = data?['last_name'] ?? '';
@@ -165,13 +166,14 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
         _age = data?['age'] ?? 0;
       });
     });
+    await Future.delayed(const Duration(milliseconds: 300));
     setState(() {
       _isLoading = false;
     });
   }
 
-  void handleUpdateStudent() {
-    FirebaseFirestore.instance.collection('students').doc(widget.documentID).update({
+  void handleUpdateStudent() async {
+    await FirebaseFirestore.instance.collection('students').doc(widget.documentID).update({
       'first_name': _firstName,
       'last_name': _lastName,
       'email': _email,
@@ -216,5 +218,13 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
           }
       );
     });
+  }
+
+  void initialize() async{
+    await Future.delayed(const Duration(milliseconds: 500));
+    setState(() {
+      _isLoading = false;
+    });
+
   }
 }
