@@ -10,7 +10,7 @@ class AddStudentScreen extends StatefulWidget {
   final bool toUpdate;
   final String documentID;
   final Map<String, dynamic> studentData;
-  const AddStudentScreen({super.key, required this.toUpdate, this.documentID = '', required this.studentData });
+  const AddStudentScreen({super.key, required this.toUpdate, this.documentID = '', this.studentData = const {}});
 
 
   @override
@@ -24,17 +24,11 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
   String _phone = '';
   String _address = '';
   int _age = 0;
-  bool _isLoading = true;
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-
-    Future.delayed(const Duration(seconds: 3), () {
-      setState(() {
-        _isLoading = false;
-      });
-    });
     if(widget.toUpdate){
       fetchStudentDetails();
     }
