@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grade_book/screens/AddStudentScreen.dart';
 
@@ -50,6 +49,7 @@ class _StudentsDetailScreenState extends State<StudentsDetailScreen> {
                 ),
                 border: TableBorder.all(),
                 columns: const [
+                  DataColumn(label: Text('Profile')),
                   DataColumn(label: Text('First Name'),),
                   DataColumn(label: Text('Last Name')),
                   DataColumn(label: Text('Age')),
@@ -78,6 +78,14 @@ class _StudentsDetailScreenState extends State<StudentsDetailScreen> {
       final student = doc.data() as Map<String, dynamic>;
       return DataRow(
         cells: [
+          DataCell(
+              const CircleAvatar(
+                backgroundImage: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnwxypGUcF0-hZwuAgd4cucn2o8Zk6t1d9Jw5mik5S_Dpd3A9bw1Tl9eS-4G0fFmQojUQ&usqp=CAU'),
+              ),
+            onTap: () {
+              print('Profile tapped');
+            },
+          ),
           DataCell(Text(student['first_name'] ?? '')),
           DataCell(Text(student['last_name'] ?? '')),
           DataCell(Text(student['age']?.toString() ?? '')),
