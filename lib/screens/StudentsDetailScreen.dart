@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:grade_book/screens/AddStudentScreen.dart';
+import 'package:grade_book/screens/ViewProfileScreen.dart';
 
 class StudentsDetailScreen extends StatefulWidget {
   const StudentsDetailScreen({super.key});
@@ -83,7 +84,9 @@ class _StudentsDetailScreenState extends State<StudentsDetailScreen> {
                 backgroundImage: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnwxypGUcF0-hZwuAgd4cucn2o8Zk6t1d9Jw5mik5S_Dpd3A9bw1Tl9eS-4G0fFmQojUQ&usqp=CAU'),
               ),
             onTap: () {
-              print('Profile tapped');
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return ViewProfileScreen();
+              }));
             },
           ),
           DataCell(Text(student['first_name'] ?? '')),
