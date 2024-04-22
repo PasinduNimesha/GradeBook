@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:grade_book/screens/AddMarksScreen.dart';
 
 class CourseDetailScreen extends StatefulWidget {
   final String documentID;
@@ -35,6 +36,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
           .get();
       int totalMarks = 0;
       totalStudents = marksSnapshot.docs.length;
+      tableData = {};
 
       for (final doc in marksSnapshot.docs) {
         final data = doc.data();
@@ -44,12 +46,10 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
         final studentRef = data['studentID'] as DocumentReference<Map<String, dynamic>>;
         print(studentRef);
         await FirebaseFirestore.instance.collection('students').doc(studentID).get().then((value) {
-          tableData[value['Username']] = marks;
+          tableData[value['username']] = marks;
         });
       }
-      if(totalStudents == 0) {
-        tableData = {};
-      }
+
       print(tableData);
 
       averageMarks = totalMarks / totalStudents;
@@ -130,6 +130,10 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddMarksScreen(courseID: widget.documentID,)),
+          );
 
         },
         child: const Icon(Icons.add),
