@@ -11,6 +11,7 @@ class CourseDetailScreen extends StatefulWidget {
 }
 
 class _CourseDetailScreenState extends State<CourseDetailScreen> {
+  int term = 1;
   int totalStudents = 0;
   double averageMarks = 0.0;
   bool isLoading = false;
@@ -30,7 +31,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
       final marksSnapshot = await FirebaseFirestore
           .instance
           .collection('marks')
-          .where('courseID', isEqualTo: FirebaseFirestore.instance.doc('/courses/${widget.documentID}'))
+          .where('courseID', isEqualTo: FirebaseFirestore.instance.doc('/courses/${widget.documentID}')).where('term', isEqualTo: term)
           .get();
       int totalMarks = 0;
       totalStudents = marksSnapshot.docs.length;
@@ -45,6 +46,9 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
         await FirebaseFirestore.instance.collection('students').doc(studentID).get().then((value) {
           tableData[value['Username']] = marks;
         });
+      }
+      if(totalStudents == 0) {
+        tableData = {};
       }
       print(tableData);
 
@@ -75,6 +79,21 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
           : Center(
         child: Column(
           children: [
+            const SizedBox(height: 20),
+            DropdownButton<int>(
+              value: term,
+              items: const [
+                DropdownMenuItem(child: Text('Term 1'), value: 1),
+                DropdownMenuItem(child: Text('Term 2'), value: 2),
+                DropdownMenuItem(child: Text('Term 3'), value: 3),
+              ],
+              onChanged: (value) {
+                setState(() {
+                  term = value!;
+                });
+                _calculateCourseDetails();
+              },
+            ),
             const SizedBox(height: 20),
             Text('Total Students: $totalStudents'),
             const SizedBox(height: 20),
