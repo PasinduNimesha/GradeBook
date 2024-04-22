@@ -39,11 +39,11 @@ class _StudentsDetailScreenState extends State<StudentsDetailScreen> {
           if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
             return const Center(child: Text('No students found'));
           }
-          return Center(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
+          return SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Center(
               child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
+                scrollDirection: Axis.horizontal,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
