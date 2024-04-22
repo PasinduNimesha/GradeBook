@@ -23,45 +23,47 @@ class ViewProfileScreen extends StatelessWidget {
             return const Center(child: Text('No data found'));
           } else {
             var userData = snapshot.data!.data() as Map<String, dynamic>?;
-            return Center(
-              child: Column(
-                children: [
-                  Stack(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CircleAvatar(
-                          radius: 50,
-                          backgroundImage: NetworkImage(
-                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnwxypGUcF0-hZwuAgd4cucn2o8Zk6t1d9Jw5mik5S_Dpd3A9bw1Tl9eS-4G0fFmQojUQ&usqp=CAU',
+            return SingleChildScrollView(
+              child: Center(
+                child: Column(
+                  children: [
+                    Stack(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.all(18.0),
+                          child: CircleAvatar(
+                            radius: 50,
+                            backgroundImage: NetworkImage(
+                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnwxypGUcF0-hZwuAgd4cucn2o8Zk6t1d9Jw5mik5S_Dpd3A9bw1Tl9eS-4G0fFmQojUQ&usqp=CAU',
+                            ),
                           ),
                         ),
-                      ),
-                      Positioned(
-                          top: 70,
-                          left: 80,
-                          child: IconButton(
-                            icon: Icon(Icons.edit),
-                            onPressed: () {
-                              print('Edit profile');
-                            },
-                          ),
-                      ),
-                    ]
-                  ),
-                  const SizedBox(height: 20),
-                  Text('First Name: ${userData!['first_name']}'),
-                  const SizedBox(height: 10),
-                  Text('Last Name: ${userData['last_name']}'),
-                  const SizedBox(height: 10),
-                  Text('Email: ${userData['email']}'),
-                  const SizedBox(height: 10),
-                  Text('Phone: ${userData['phone']}'),
-                  const SizedBox(height: 10),
-                  Text('Address: ${userData['address']}'),
-                  const SizedBox(height: 10),
-                  Text('Age: ${userData['age']}'),
-                ],
+                        Positioned(
+                            top: 70,
+                            left: 80,
+                            child: IconButton(
+                              icon: Icon(Icons.edit),
+                              onPressed: () {
+                                print('Edit profile');
+                              },
+                            ),
+                        ),
+                      ]
+                    ),
+                    const SizedBox(height: 20),
+                    Text('First Name: ${userData!['first_name']}'),
+                    const SizedBox(height: 10),
+                    Text('Last Name: ${userData['last_name']}'),
+                    const SizedBox(height: 10),
+                    Text('Email: ${userData['email']}'),
+                    const SizedBox(height: 10),
+                    Text('Phone: ${userData['phone']}'),
+                    const SizedBox(height: 10),
+                    Text('Address: ${userData['address']}'),
+                    const SizedBox(height: 10),
+                    Text('Age: ${userData['age']}'),
+                  ],
+                ),
               ),
             );
           }
