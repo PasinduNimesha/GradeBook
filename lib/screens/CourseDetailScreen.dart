@@ -77,57 +77,57 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : Center(
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            DropdownButton<int>(
-              value: term,
-              items: const [
-                DropdownMenuItem(child: Text('Term 1'), value: 1),
-                DropdownMenuItem(child: Text('Term 2'), value: 2),
-                DropdownMenuItem(child: Text('Term 3'), value: 3),
-              ],
-              onChanged: (value) {
-                setState(() {
-                  term = value!;
-                });
-                _calculateCourseDetails();
-              },
-            ),
-            const SizedBox(height: 20),
-            Text('Total Students: $totalStudents'),
-            const SizedBox(height: 20),
-            Text('Average Marks: $averageMarks'),
-            const SizedBox(height: 20),
-            Expanded(
-              child: SingleChildScrollView(
-                child: DataTable(
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      top: BorderSide(width: 1),
-                      bottom: BorderSide(width: 1),
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  DropdownButton<int>(
+                    value: term,
+                    items: const [
+                      DropdownMenuItem(child: Text('Term 1'), value: 1),
+                      DropdownMenuItem(child: Text('Term 2'), value: 2),
+                      DropdownMenuItem(child: Text('Term 3'), value: 3),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        term = value!;
+                      });
+                      _calculateCourseDetails();
+                      },
+                  ),
+                  const SizedBox(height: 20),
+                  Text('Total Students: $totalStudents'),
+                  const SizedBox(height: 20),
+                  Text('Average Marks: $averageMarks'),
+                  const SizedBox(height: 20),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: DataTable(
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            top: BorderSide(width: 1),
+                            bottom: BorderSide(width: 1),
+                          ),
+                        ),
+                        columnSpacing: 150,
+                        border: TableBorder.all(),
+                        columns: const [
+                          DataColumn(label: Text('Username')),
+                          DataColumn(label: Text('Marks')),
+                        ],
+                        rows: tableData.entries.map((entry) {
+                          final name = entry.key;
+                          final marks = entry.value;
+                          return DataRow(cells: [
+                            DataCell(Text(name)),
+                            DataCell(Text(marks.toString()), showEditIcon: false),
+                          ]);
+                        }).toList(),
+                      ),
                     ),
                   ),
-                  columnSpacing: 150,
-                  border: TableBorder.all(),
-                  columns: const [
-                    DataColumn(label: Text('Username')),
-                    DataColumn(label: Text('Marks')),
-                  ],
-                  rows: tableData.entries.map((entry) {
-                    final name = entry.key;
-                    final marks = entry.value;
-                    return DataRow(cells: [
-                      DataCell(Text(name)),
-                      DataCell(Text(marks.toString()), showEditIcon: false),
-                    ]);
-                  }).toList(),
-                ),
+                ],
               ),
-            ),
-          ],
-        ),
-      ),
+                ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
