@@ -128,6 +128,12 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
