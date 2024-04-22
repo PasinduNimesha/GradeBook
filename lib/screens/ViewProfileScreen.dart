@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -25,11 +26,28 @@ class ViewProfileScreen extends StatelessWidget {
             return Center(
               child: Column(
                 children: [
-                  const CircleAvatar(
-                    radius: 50,
-                    backgroundImage: NetworkImage(
-                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnwxypGUcF0-hZwuAgd4cucn2o8Zk6t1d9Jw5mik5S_Dpd3A9bw1Tl9eS-4G0fFmQojUQ&usqp=CAU',
-                    ),
+                  Stack(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundImage: NetworkImage(
+                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnwxypGUcF0-hZwuAgd4cucn2o8Zk6t1d9Jw5mik5S_Dpd3A9bw1Tl9eS-4G0fFmQojUQ&usqp=CAU',
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                          top: 70,
+                          left: 80,
+                          child: IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {
+                              print('Edit profile');
+                            },
+                          ),
+                      ),
+                    ]
                   ),
                   const SizedBox(height: 20),
                   Text('First Name: ${userData!['first_name']}'),
