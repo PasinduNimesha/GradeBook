@@ -76,7 +76,9 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.delete),
-            onPressed: () {},
+            onPressed: () {
+              deleteCourse();
+            },
           ),
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -151,5 +153,22 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
       ),
 
     );
+  }
+  void deleteCourse() {
+    FirebaseFirestore.instance.collection('courses').doc(widget.documentID).delete().then((value) {
+      showDialog(context: context, builder: (context) {
+        return AlertDialog(
+          title: const Text('Course Deleted'),
+          content: const Text('Course has been deleted successfully'),
+          actions: [
+            TextButton(onPressed: () {
+              Navigator.pop(context);
+              Navigator.pop(context);
+              }, child: const Text('OK')
+            )
+          ],
+        );
+      });
+    });
   }
 }
