@@ -59,7 +59,8 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
           actions: [
             TextButton(onPressed: () {
               Navigator.pop(context);
-            }, child: const Text('OK'))
+              Navigator.pop(context);
+              }, child: const Text('OK'))
           ],
         );
       });
