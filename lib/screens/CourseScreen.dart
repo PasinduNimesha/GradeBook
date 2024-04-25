@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:grade_book/components/LargeButton.dart';
+import 'package:grade_book/screens/AddCourseScreen.dart';
 
 import 'CourseDetailScreen.dart';
 
@@ -50,6 +51,14 @@ class CourseScreen extends StatelessWidget {
           );
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return AddCourseScreen();
+          }));
+        },
+        child: const Icon(Icons.add),
+      )
     );
   }
 }
