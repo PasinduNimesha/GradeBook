@@ -73,6 +73,18 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Course Details Screen'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () {
+              _calculateCourseDetails();
+            },
+          ),
+        ],
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -134,10 +146,10 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
             context,
             MaterialPageRoute(builder: (context) => AddMarksScreen(courseID: widget.documentID,)),
           );
-
         },
         child: const Icon(Icons.add),
       ),
+
     );
   }
 }
