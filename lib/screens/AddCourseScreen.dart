@@ -20,14 +20,12 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/add-student');
               },
               child: const Text('Add Student'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/add-marks');
               },
               child: const Text('Add Marks'),
             ),
