@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/InputField.dart';
 import '../components/MediumButton.dart';
@@ -18,6 +19,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   String txt_username = "";
   String txt_password = "";
+  bool rememberMe = false;
   bool isLoading = false;
   @override
   void initState() {
@@ -54,20 +56,23 @@ class _LoginScreenState extends State<LoginScreen> {
                     isLoading = true;
                   });
                   if(txt_username.isNotEmpty && txt_password.isNotEmpty){
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
                     var auth = FirebaseAuth.instance;
                     auth
                         .signInWithEmailAndPassword(
                         email: txt_username, password: txt_password)
                         .then((value) {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => const MainScreen())
-                      );
-                      setState(() {
-                        isLoading = false;
-                      });
-
-                    }).catchError((onError) {
+                          if(rememberMe){
+                            prefs.setBool("isLoggedIn", true);
+                          }
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => const MainScreen())
+                          );
+                          setState(() {
+                            isLoading = false;
+                          });
+                        }).catchError((onError) {
                       Get.snackbar("Username or Password is incorrect", "Please try again");
                       setState(() {
                         isLoading = false;
@@ -81,6 +86,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   }
 
                 }),
+            const SizedBox(height: 20,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Checkbox(
+                    value: rememberMe,
+                    onChanged: (value) {
+                      setState(() {
+                        rememberMe = value!;
+                      });
+                    }),
+                const Text('Remember Me'),
+              ],
+            ),
           ],
         ),
 
