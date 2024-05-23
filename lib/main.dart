@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:grade_book/screens/LoginScreen.dart';
+import 'package:grade_book/screens/MainScreen.dart';
 
 import 'firebase_options.dart';
 
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const LoginScreen(),
+      home: const MainScreen(),
     );
   }
 }
