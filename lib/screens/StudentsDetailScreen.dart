@@ -25,7 +25,7 @@ class _StudentsDetailScreenState extends State<StudentsDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Students Detail Screen'),
+        title: const Text('Students Details'),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('students').snapshots(),
