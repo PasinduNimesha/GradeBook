@@ -39,7 +39,7 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Student Screen'),
+        title: const Text('Add Student'),
       ),
       body: SingleChildScrollView(
         child: Center(
