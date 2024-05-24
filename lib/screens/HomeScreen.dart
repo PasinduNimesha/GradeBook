@@ -52,6 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void initialize() async {
+
     await Future.delayed(const Duration(milliseconds: 200));
     setState(() {
       isLoading = false;
