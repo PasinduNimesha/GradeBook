@@ -19,7 +19,7 @@ class _AddMarksScreenState extends State<AddMarksScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Marks Screen'),
+        title: const Text('Add Marks'),
       ),
       body: Center(
         child: Column(
