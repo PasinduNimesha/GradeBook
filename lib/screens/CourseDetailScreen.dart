@@ -72,7 +72,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Course Details Screen'),
+        title: const Text('Course Details'),
         actions: [
           IconButton(
             icon: const Icon(Icons.delete),
