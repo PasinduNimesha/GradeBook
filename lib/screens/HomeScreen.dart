@@ -24,17 +24,22 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home Screen'),
+        title: const Text('Home'),
       ),
       body:
       isLoading ?
       const Center(
         child: CupertinoActivityIndicator(),
       ) :
-      const SingleChildScrollView(
+      SingleChildScrollView(
         child: Center(
           child: Column(
             children: [
+              Container(
+                height: 50,
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: Text("Welcome to Grade Book", style: TextStyle(fontSize: 20),)
+              ),
               UpperHome(),
               SizedBox(height: 20,),
               LowerHome(),
