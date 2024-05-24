@@ -16,7 +16,7 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Course Screen'),
+        title: const Text('Add Course'),
       ),
       body: SingleChildScrollView(
         child: Center(
