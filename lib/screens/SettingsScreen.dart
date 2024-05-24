@@ -12,7 +12,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings Screen'),
+        title: const Text('Settings'),
       ),
       body: Center(
         child: ListView(
