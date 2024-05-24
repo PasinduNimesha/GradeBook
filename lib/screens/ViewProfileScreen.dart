@@ -10,7 +10,7 @@ class ViewProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('View Profile Screen'),
+        title: const Text('View Profile'),
       ),
       body: FutureBuilder<DocumentSnapshot>(
         future: FirebaseFirestore.instance.collection('students').doc(documentID).get(),
