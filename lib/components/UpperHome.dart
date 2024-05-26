@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +13,13 @@ class UpperHome extends StatefulWidget {
 class _UpperHomeState extends State<UpperHome> {
   int _numberOfCourses = 0;
   int _numberOfStudents = 0;
+  bool isLoading = true;
+  @override
+  void initState() {
+    super.initState();
+    initialize();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,53 +42,55 @@ class _UpperHomeState extends State<UpperHome> {
           Container(
             margin: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: Colors.red,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Column(
+            child: isLoading? const CupertinoActivityIndicator():Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(
-                  Icons.book,
-                  size: 50,
-                  color: Colors.white,
-                ),
+              children: [
+                Text("Number of Students"),
                 Text(
-                  'Courses',
-                  style: TextStyle(
-                    color: Colors.white,
+                  '$_numberOfStudents',
+                  style: const TextStyle(
                     fontSize: 20,
                   ),
                 ),
-              ],
+              ]
             ),
           ),
           Container(
             margin: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: Colors.red,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Column(
+            child: isLoading? const CupertinoActivityIndicator():Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(
-                  Icons.person,
-                  size: 50,
-                  color: Colors.white,
-                ),
+              children: [
+                Text("Number of Courses"),
                 Text(
-                  'Profile',
-                  style: TextStyle(
-                    color: Colors.white,
+                  '$_numberOfCourses',
+                  style: const TextStyle(
                     fontSize: 20,
                   ),
                 ),
-              ],
+              ]
             ),
           ),
         ],
       )
     );
+  }
+
+  void initialize() async{
+    await FirebaseFirestore.instance.collection('courses').get().then((value) {
+      _numberOfCourses = value.docs.length;
+    });
+    await FirebaseFirestore.instance.collection('students').get().then((value) {
+      _numberOfStudents = value.docs.length;
+    });
+    await Future.delayed(const Duration(milliseconds: 200));
+    setState(() {
+      isLoading = false;
+    });
+
   }
 }
