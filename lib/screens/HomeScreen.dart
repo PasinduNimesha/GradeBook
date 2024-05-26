@@ -27,10 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('Home'),
       ),
       body:
-      isLoading ?
-      const Center(
-        child: CupertinoActivityIndicator(),
-      ) :
       SingleChildScrollView(
         child: Center(
           child: Column(
