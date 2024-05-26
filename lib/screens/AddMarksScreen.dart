@@ -33,12 +33,16 @@ class _AddMarksScreenState extends State<AddMarksScreen> {
               setState(() {
                 _marks = int.parse(value);
               });
-            }, ),
+            },
+            keyboardType: TextInputType.number,
+            ),
             InputField(label: "Term", onPressed: (value) {
               setState(() {
                 _term = int.parse(value);
               });
-            }, ),
+            },
+            keyboardType: TextInputType.number,
+            ),
             const SizedBox(height: 20,),
             ElevatedButton(onPressed: (){
               addMarks();
