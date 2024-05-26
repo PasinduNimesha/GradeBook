@@ -43,16 +43,12 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
         final marks = data['marks'] as int;
         totalMarks += marks;
         final studentID = data['studentID'].toString().split('/').last.split(')')[0];
-        final studentRef = data['studentID'] as DocumentReference<Map<String, dynamic>>;
-        print(studentRef);
         await FirebaseFirestore.instance.collection('students').doc(studentID).get().then((value) {
           tableData[value['username']] = marks;
         });
       }
-
-      print(tableData);
-
       averageMarks = totalMarks / totalStudents;
+      averageMarks = double.parse(averageMarks.toStringAsFixed(2));
 
       // Update the course details in Firestore
       await FirebaseFirestore.instance.collection('courses').doc(widget.documentID).update({
