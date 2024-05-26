@@ -49,17 +49,20 @@ class _AddMarksScreenState extends State<AddMarksScreen> {
     );
   }
 
-  void addMarks() async{
-    await FirebaseFirestore.instance.collection('students').where('username', isEqualTo: _studentUsername).get().then((value) {
-      final studentID = value.docs[0].id;
-      print(studentID);
-      if(value.docs.isNotEmpty) {
-        FirebaseFirestore.instance.collection('marks').add({
-          'studentID': FirebaseFirestore.instance.doc('/students/$studentID'),
-          'courseID': FirebaseFirestore.instance.doc('/courses/${widget.courseID}'),
-          'marks': _marks,
-          'term': _term,
-        }).then((value) {
+  void addMarks() async {
+    try {
+      await FirebaseFirestore.instance.collection('students').where(
+          'username', isEqualTo: _studentUsername).get().then((value) {
+        final studentID = value.docs[0].id;
+        print(studentID);
+        if (value.docs.isNotEmpty) {
+          FirebaseFirestore.instance.collection('marks').add({
+            'studentID': FirebaseFirestore.instance.doc('/students/$studentID'),
+            'courseID': FirebaseFirestore.instance.doc(
+                '/courses/${widget.courseID}'),
+            'marks': _marks,
+            'term': _term,
+          }).then((value) {
             showDialog(context: context, builder: (context) {
               return AlertDialog(
                 title: const Text('Success'),
@@ -72,10 +75,25 @@ class _AddMarksScreenState extends State<AddMarksScreen> {
                 ],
               );
             });
-        }).onError((error, stackTrace) {
-          print('Error adding marks: $error');
-        });
-      }
-    });
+          }).onError((error, stackTrace) {
+            print('Error adding marks: $error');
+          });
+        }
+      });
+    } on RangeError {
+      showDialog(context: context, builder: (context) {
+        return AlertDialog(
+          title: const Text('Error'),
+          content: Text('Student with username $_studentUsername not found'),
+          actions: [
+            TextButton(onPressed: () {
+              Navigator.of(context).pop();
+            }, child: const Text('OK'))
+          ],
+        );
+      });
+    } catch (error) {
+      print('Error adding marks: $error');
+    }
   }
 }
