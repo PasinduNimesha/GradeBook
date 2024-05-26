@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 class InputField extends StatefulWidget {
   final String label;
   final bool obscureText;
-  final String? defaultValue; // New property for default value
+  final String? defaultValue;
+  final TextInputType keyboardType;
   final ValueChanged<String>? onPressed;
 
-  const InputField({super.key, required this.label, required this.onPressed, this.obscureText = false, this.defaultValue});
+  const InputField({super.key, required this.label, required this.onPressed, this.obscureText = false, this.defaultValue, this.keyboardType = TextInputType.text});
 
   @override
   State<InputField> createState() => _InputFieldState();
@@ -34,6 +35,7 @@ class _InputFieldState extends State<InputField> {
           ),
           focusColor: Colors.red,
         ),
+        keyboardType: widget.keyboardType,
         onChanged: widget.onPressed,
         obscureText: widget.obscureText,
       ),
