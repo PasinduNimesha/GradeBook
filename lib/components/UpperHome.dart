@@ -36,7 +36,7 @@ class _UpperHomeState extends State<UpperHome> {
           ),
         ],
       ),
-      child: GridView.count(
+      child: isLoading? const CupertinoActivityIndicator():GridView.count(
         crossAxisCount: 2,
         children: [
           Container(
@@ -44,7 +44,7 @@ class _UpperHomeState extends State<UpperHome> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
             ),
-            child: isLoading? const CupertinoActivityIndicator():Column(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("Number of Students"),
@@ -62,7 +62,7 @@ class _UpperHomeState extends State<UpperHome> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
             ),
-            child: isLoading? const CupertinoActivityIndicator():Column(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("Number of Courses"),
