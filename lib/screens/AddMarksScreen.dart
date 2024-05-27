@@ -56,10 +56,8 @@ class _AddMarksScreenState extends State<AddMarksScreen> {
   void addMarks() async {
     String username = _studentUsername;
     String courseID = '/courses/${widget.courseID}';
-    bool _isDuplicate = await isDuplicate(username, courseID, _term).then((value){
-      return value;
-    });
-    if(_isDuplicate){
+    bool duplicate = await isDuplicate(username, courseID, _term);
+    if(duplicate){
       showDialog(context: context, builder: (context) {
         return AlertDialog(
           title: const Text('Error'),
@@ -76,7 +74,6 @@ class _AddMarksScreenState extends State<AddMarksScreen> {
         await FirebaseFirestore.instance.collection('students').where(
             'username', isEqualTo: _studentUsername).get().then((value) {
           final studentID = value.docs[0].id;
-          print(studentID);
           if (value.docs.isNotEmpty) {
             FirebaseFirestore.instance.collection('marks').add({
               'studentID': FirebaseFirestore.instance.doc('/students/$studentID'),
@@ -128,7 +125,6 @@ class _AddMarksScreenState extends State<AddMarksScreen> {
         .where('courseID', isEqualTo: FirebaseFirestore.instance.doc(courseID))
         .where('term', isEqualTo: term).get().then((value) {
       if (value.docs.isNotEmpty) {
-        print(value.docs[0].data()['studentID']);
         return true;
       } else {
         return false;
