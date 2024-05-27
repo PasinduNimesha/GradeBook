@@ -54,41 +54,16 @@ class _AddMarksScreenState extends State<AddMarksScreen> {
   }
 
   void addMarks() async {
-    try {
-      await FirebaseFirestore.instance.collection('students').where(
-          'username', isEqualTo: _studentUsername).get().then((value) {
-        final studentID = value.docs[0].id;
-        print(studentID);
-        if (value.docs.isNotEmpty) {
-          FirebaseFirestore.instance.collection('marks').add({
-            'studentID': FirebaseFirestore.instance.doc('/students/$studentID'),
-            'courseID': FirebaseFirestore.instance.doc(
-                '/courses/${widget.courseID}'),
-            'marks': _marks,
-            'term': _term,
-          }).then((value) {
-            showDialog(context: context, builder: (context) {
-              return AlertDialog(
-                title: const Text('Success'),
-                content: const Text('Marks added successfully'),
-                actions: [
-                  TextButton(onPressed: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pop();
-                  }, child: const Text('OK'))
-                ],
-              );
-            });
-          }).onError((error, stackTrace) {
-            print('Error adding marks: $error');
-          });
-        }
-      });
-    } on RangeError {
+    String studentID = '/students/xIWcvOMeiebL2kKhUK9Q';
+    String courseID = '/courses/dhIt6qLnMRtNOoaejAPA';
+    bool _isDuplicate = await isDuplicate(studentID, courseID, _term).then((value){
+      return value;
+    });
+    if(_isDuplicate){
       showDialog(context: context, builder: (context) {
         return AlertDialog(
           title: const Text('Error'),
-          content: Text('Student with username $_studentUsername not found'),
+          content: const Text('Marks already added for this student and term'),
           actions: [
             TextButton(onPressed: () {
               Navigator.of(context).pop();
@@ -96,8 +71,68 @@ class _AddMarksScreenState extends State<AddMarksScreen> {
           ],
         );
       });
-    } catch (error) {
-      print('Error adding marks: $error');
+    }else{
+      try {
+        await FirebaseFirestore.instance.collection('students').where(
+            'username', isEqualTo: _studentUsername).get().then((value) {
+          final studentID = value.docs[0].id;
+          print(studentID);
+          if (value.docs.isNotEmpty) {
+            FirebaseFirestore.instance.collection('marks').add({
+              'studentID': FirebaseFirestore.instance.doc('/students/$studentID'),
+              'courseID': FirebaseFirestore.instance.doc(
+                  '/courses/${widget.courseID}'),
+              'marks': _marks,
+              'term': _term,
+            }).then((value) {
+              showDialog(context: context, builder: (context) {
+                return AlertDialog(
+                  title: const Text('Success'),
+                  content: const Text('Marks added successfully'),
+                  actions: [
+                    TextButton(onPressed: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                    }, child: const Text('OK'))
+                  ],
+                );
+              });
+            }).onError((error, stackTrace) {
+              print('Error adding marks: $error');
+            });
+          }
+        });
+      } on RangeError {
+        showDialog(context: context, builder: (context) {
+          return AlertDialog(
+            title: const Text('Error'),
+            content: Text('Student with username $_studentUsername not found'),
+            actions: [
+              TextButton(onPressed: () {
+                Navigator.of(context).pop();
+              }, child: const Text('OK'))
+            ],
+          );
+        });
+      } catch (error) {
+        print('Error adding marks: $error');
+      }
     }
+
+
+  }
+
+  Future<bool> isDuplicate(String studentID, String courseID, int term) async{
+    return await FirebaseFirestore.instance.collection('marks')
+        .where('studentID', isEqualTo: FirebaseFirestore.instance.doc(studentID))
+        .where('courseID', isEqualTo: FirebaseFirestore.instance.doc(courseID))
+        .where('term', isEqualTo: term).get().then((value) {
+      if (value.docs.isNotEmpty) {
+        print(value.docs[0].data()['studentID']);
+        return true;
+      } else {
+        return false;
+      }
+    });
   }
 }
